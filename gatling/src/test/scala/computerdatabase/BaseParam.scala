@@ -17,7 +17,7 @@ trait BaseParam extends Simulation{
 
   val BOOKS_AMOUNT = 10_000
 
-  def numberRequests = 100
+  def numberRequests = 300
 
   val random = new Random()
 
@@ -26,7 +26,7 @@ trait BaseParam extends Simulation{
   }
 
   def randomText: String = {
-    val title = "Book"+ random.nextInt(BOOKS_AMOUNT)
+    val title = "Book"+ random.nextInt(BOOKS_AMOUNT) +" "
     val authorName = "AuthorName"+random.nextInt(BOOKS_AMOUNT)+" "
     val authorSurname = "AuthorSurname"+random.nextInt(BOOKS_AMOUNT)
     title + authorName + authorSurname
@@ -35,6 +35,6 @@ trait BaseParam extends Simulation{
   def scn(): ScenarioBuilder
 
   setUp(
-    scn().inject(rampUsers(20).during(1)
+    scn().inject(rampUsers(1000).during(1)
     ).protocols(httpProtocol))
 }

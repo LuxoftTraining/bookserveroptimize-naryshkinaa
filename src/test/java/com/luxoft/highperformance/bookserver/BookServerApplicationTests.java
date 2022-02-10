@@ -1,7 +1,9 @@
 package com.luxoft.highperformance.bookserver;
 
 import com.luxoft.highperformance.bookserver.model.Book;
+import com.luxoft.highperformance.bookserver.model.BookWord;
 import com.luxoft.highperformance.bookserver.repositories.BookRepository;
+import com.luxoft.highperformance.bookserver.repositories.BookWordRepository;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,6 +27,10 @@ class BookServerApplicationTests {
     @Autowired
     BookRepository bookRepository;
 
+
+    @Autowired
+    BookWordRepository bookWordRepository;
+
     @Test
     void contextLoads() {
     }
@@ -32,6 +38,7 @@ class BookServerApplicationTests {
     @Test
     public void removeAllBooks() {
         bookRepository.deleteAll();
+        bookWordRepository.deleteAll();
     }
 
     @Test
@@ -52,6 +59,12 @@ class BookServerApplicationTests {
             if(words.length >= 4) book.setFourth(words[3]);
             if(words.length >= 5) book.setFifth(words[4]);
             bookRepository.save(book);
+            for(String word: words){
+                val bookWord = new BookWord();
+                bookWord.setBookId(book.getId());
+                bookWord.setWord(word);
+                bookWordRepository.save(bookWord);
+            }
         }
     }
 
