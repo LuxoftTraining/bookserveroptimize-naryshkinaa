@@ -2,6 +2,7 @@ package com.luxoft.highperformance.bookserver;
 
 import com.luxoft.highperformance.bookserver.model.Book;
 import com.luxoft.highperformance.bookserver.repositories.BookRepository;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -42,7 +43,14 @@ class BookServerApplicationTests {
             String authorName = "AuthorName"+random.nextInt(BOOKS_AMOUNT)+" ";
             String authorSurname = "AuthorSurname"+random.nextInt(BOOKS_AMOUNT);
             Book book = new Book();
-            book.setTitle(title+" by "+authorName+authorSurname);
+            val total = title+" by "+authorName+authorSurname;
+            book.setTitle(total);
+            val words = BookUtil.split(total);
+            if(words.length >= 1) book.setFirst(words[0]);
+            if(words.length >= 2) book.setSecond(words[1]);
+            if(words.length >= 3) book.setThird(words[2]);
+            if(words.length >= 4) book.setFourth(words[3]);
+            if(words.length >= 5) book.setFifth(words[4]);
             bookRepository.save(book);
         }
     }

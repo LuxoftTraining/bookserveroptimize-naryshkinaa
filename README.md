@@ -18,3 +18,6 @@
 - Оценит время поиска книги по подстроке
 - Выдержит 1000 клиентов за 1 сек
 - Выдержит еще больше клиентов (напишите, сколько)
+
+Запуск тестов
+- mvn gatling:test -Dgatling.simulationClass=computerdatabase.BasicSimulation

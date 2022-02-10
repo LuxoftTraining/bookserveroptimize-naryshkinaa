@@ -5,6 +5,7 @@ import com.luxoft.highperformance.bookserver.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +18,7 @@ public class BookController {
     @Autowired
     BookRepository bookRepository;
 
-    @GetMapping("keywords/{keywordsString}")
+    @GetMapping("find/simple/{keywordsString}")
     public List<Book> getBookByTitle(@PathVariable String keywordsString) {
         String[] keywords = keywordsString.split(" ");
         if (keywords.length == 1) {
@@ -29,7 +30,20 @@ public class BookController {
             return bookRepository.findAllByTitleContainingAndTitleContainingAndTitleContaining(
                 keywords[0], keywords[1], keywords[2]);
         }
-        return null;
+        return Collections.emptyList();
+    }
+
+    @GetMapping("find/words/{keywordsString}")
+    public List<Book> method2(@PathVariable String keywordsString) {
+        String[] keywords = BookUtil.split(keywordsString);
+        if (keywords.length == 1) {
+            return bookRepository.findByWords(keywords[0]);
+        } else if (keywords.length == 2) {
+            return bookRepository.findByWords(keywords[0], keywords[1]);
+        } else if (keywords.length == 3) {
+            return bookRepository.findByWords(keywords[0], keywords[1], keywords[2]);
+        }
+        return Collections.emptyList();
     }
 
     @GetMapping("/random")
